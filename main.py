@@ -29,9 +29,6 @@ def main():
     pygame.display.set_caption('bmtron')
     display_surf.fill((0,0,0))
 
-pygame.draw.rect(display_surf, WHITE, ((0,0),(window_width,window_height)), 1)
-
-
 class player():
     def __init__ (self, x, y, dir, color):
         self.x = x
@@ -60,18 +57,19 @@ class player():
     def changeDirection(self, newD):
         self.direction = newD
 
-offset = 100
+offset = 150
 pasttrail = []
 playerOne = player(offset,offset,2,GREEN)
 playerTwo = player(window_width-offset,window_height-offset,-2,RED)
-pause = False
+pygame.draw.rect(display_surf, WHITE, ((0,0),(window_width,window_height)), 1)
+
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or keyboard.is_pressed("q"):
             pygame.quit()
             sys.exit()
-    if(playerOne.alive and playerTwo.alive and not pause):
+    if(playerOne.alive and playerTwo.alive):
         playerOne.move()
         playerTwo.move()
         if keyboard.is_pressed('w'):
@@ -94,8 +92,8 @@ while True:
         wait(5)
     if keyboard.is_pressed('r'):
         pasttrail.clear()
-        playerOne = player(50,50,2,GREEN)
-        playerTwo = player(window_width-50,window_height-50,-2,RED)
+        playerOne = player(offset,offset,2,GREEN)
+        playerTwo = player(window_width-offset,window_height-offset,-2,RED)
         display_surf.fill(BLACK)
         pygame.draw.rect(display_surf, WHITE, ((0,0),(window_width,window_height)), 1)
 
