@@ -7,6 +7,9 @@ from pygame.time import wait
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
+BLUE = (0,0,255)
+RED = (255,0,0)
+GREEN = (0,255,0)
 
 #Constants
 window_width = 800
@@ -24,12 +27,8 @@ def main():
     global display_surf
     display_surf = pygame.display.set_mode((window_width,window_height))
     pygame.display.set_caption('bmtron')
-    drawBackground()
-
-def drawBackground():
     display_surf.fill((0,0,0))
 
-pasttrail = []
 
 class player():
     def __init__ (self, x, y, dir, color):
@@ -48,28 +47,29 @@ class player():
             self.y += self.direction
         else:
             self.x += self.direction/2
-        if((self.x,self.y) in pasttrail):
-            print("collide")
+        if((self.x,self.y) in pasttrail or not self.withinBounds()):
+            print("collision, game over")
             self.alive = False
         self.draw()
-
         
+    def withinBounds(self):
+        return self.x >= 0 and self.x <= window_width and self.y >= 0 and self.y <= window_height
 
     def changeDirection(self, newD):
         self.direction = newD
 
-
-drawBackground()
-playerset = {}
-playerOne = player(20,20,2,(0,0,255))
-playerTwo = player(window_width-20,window_height-20,-2,(255,0,0))
+offset = 100
+pasttrail = []
+playerOne = player(offset,offset,2,BLUE)
+playerTwo = player(window_width-offset,window_height-offset,-2,RED)
+pause = False
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or keyboard.is_pressed("q"):
             pygame.quit()
             sys.exit()
-    if(playerOne.alive and playerTwo.alive):
+    if(playerOne.alive and playerTwo.alive and not pause):
         playerOne.move()
         playerTwo.move()
         if keyboard.is_pressed('w'):
@@ -90,5 +90,12 @@ while True:
         if keyboard.is_pressed('j'):
             playerTwo.changeDirection(-2)
         wait(5)
+    if keyboard.is_pressed('r'):
+        pasttrail.clear()
+        playerOne = player(50,50,2,(0,0,255))
+        playerTwo = player(window_width-50,window_height-50,-2,(255,0,0))
+        display_surf.fill(BLACK)
     pygame.display.flip()
 
+if __name__=='__main__':
+    main()
