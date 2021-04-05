@@ -29,6 +29,8 @@ def main():
     pygame.display.set_caption('bmtron')
     display_surf.fill((0,0,0))
 
+pygame.draw.rect(display_surf, WHITE, ((0,0),(window_width,window_height)), 1)
+
 
 class player():
     def __init__ (self, x, y, dir, color):
@@ -48,19 +50,19 @@ class player():
         else:
             self.x += self.direction/2
         if((self.x,self.y) in pasttrail or not self.withinBounds()):
-            print("collision, game over")
+            print("Game Over")
             self.alive = False
         self.draw()
         
     def withinBounds(self):
-        return self.x >= 0 and self.x <= window_width and self.y >= 0 and self.y <= window_height
+        return self.x > 0 and self.x < window_width and self.y > 0 and self.y < window_height
 
     def changeDirection(self, newD):
         self.direction = newD
 
 offset = 100
 pasttrail = []
-playerOne = player(offset,offset,2,BLUE)
+playerOne = player(offset,offset,2,GREEN)
 playerTwo = player(window_width-offset,window_height-offset,-2,RED)
 pause = False
 
@@ -92,10 +94,12 @@ while True:
         wait(5)
     if keyboard.is_pressed('r'):
         pasttrail.clear()
-        playerOne = player(50,50,2,(0,0,255))
-        playerTwo = player(window_width-50,window_height-50,-2,(255,0,0))
+        playerOne = player(50,50,2,GREEN)
+        playerTwo = player(window_width-50,window_height-50,-2,RED)
         display_surf.fill(BLACK)
-    pygame.display.flip()
+        pygame.draw.rect(display_surf, WHITE, ((0,0),(window_width,window_height)), 1)
+
+    pygame.display.update()
 
 if __name__=='__main__':
     main()
