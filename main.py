@@ -52,7 +52,7 @@ class player():
         self.draw()
         
     def withinBounds(self):
-        return self.x > 0 and self.x < window_width and self.y > 0 and self.y < window_height
+        return self.x > 1 and self.x < window_width -1 and self.y > 1 and self.y < window_height -1
 
     def changeDirection(self, newD):
         self.direction = newD
@@ -72,22 +72,22 @@ while True:
     if(playerOne.alive and playerTwo.alive):
         playerOne.move()
         playerTwo.move()
-        if keyboard.is_pressed('w'):
+        if keyboard.is_pressed('w') and playerOne.direction != 1:
             playerOne.changeDirection(-1)
-        if keyboard.is_pressed('d'):
+        if keyboard.is_pressed('d') and playerOne.direction != -2:
             playerOne.changeDirection(2)
-        if keyboard.is_pressed('s'):
+        if keyboard.is_pressed('s') and playerOne.direction != -1:
             playerOne.changeDirection(1)
-        if keyboard.is_pressed('a'):
+        if keyboard.is_pressed('a') and playerOne.direction != 2:
             playerOne.changeDirection(-2)
 
-        if keyboard.is_pressed('i'):
+        if keyboard.is_pressed('i') and playerTwo.direction != 1:
             playerTwo.changeDirection(-1)
-        if keyboard.is_pressed('l'):
+        if keyboard.is_pressed('l') and playerTwo.direction != -2:
             playerTwo.changeDirection(2)
-        if keyboard.is_pressed('k'):
+        if keyboard.is_pressed('k') and playerTwo.direction != -1:
             playerTwo.changeDirection(1)
-        if keyboard.is_pressed('j'):
+        if keyboard.is_pressed('j') and playerTwo.direction != 2:
             playerTwo.changeDirection(-2)
         wait(5)
     if keyboard.is_pressed('r'):
