@@ -49,7 +49,8 @@ class player():
         if((self.x,self.y) in pasttrail or not self.withinBounds()):
             print("Game Over")
             self.alive = False
-        self.draw()
+        else:
+            self.draw()
         
     def withinBounds(self):
         return self.x > 1 and self.x < window_width -1 and self.y > 1 and self.y < window_height -1
